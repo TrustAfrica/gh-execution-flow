@@ -6,6 +6,19 @@ jobs:
       matrix:
         node-version: [18, 20]
         operating-system: [ubuntu-latest, windows-latest, macos-latest]
+        # we can also add more key-pair values to the matrix, for example:
+        include:
+          - node-version: 18
+            operating-system: ubuntu-latest
+            extra: 'This is an extra value for Node 18 on Ubuntu'
+          - node-version: 20
+            operating-system: windows-latest
+            extra: 'This is an extra value for Node 20 on Windows'
+        exclude:
+          - node-version: 18
+            operating-system: windows-latest
+          - node-version: 20
+            operating-system: ubuntu-latest
     runs-on: ${{ matrix.operating-system }}
     steps:
       - name: Get code
