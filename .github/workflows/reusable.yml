@@ -15,5 +15,7 @@ jobs:
               uses: actions/download-artifact@v7
               with:
                 name: ${{ inputs.artifact-name }}
+            - name: Output contents
+              run: ls
             - name: Deploy to production
               run: echo "Deploying to production..."
