@@ -7,6 +7,10 @@ on:
                 required: false
                 default: dist
                 type: string
+        outputs:
+            deployment-status:
+                description: The status of the deployment
+                value: ${{ jobs.deploy.outputs.outcome }}
         secrets:
             some-secrets:
                 description: Some secrets to use in the workflow
@@ -15,6 +19,8 @@ on:
 jobs:
     deploy:
         runs-on: ubuntu-latest
+        outputs:
+            outcome: ${{ steps.set-result.outputs.step-result }}
         steps:
             - name: Get build artifacts
               uses: actions/download-artifact@v7
@@ -24,3 +30,6 @@ jobs:
               run: ls
             - name: Deploy to production
               run: echo "Deploying to production..."
+            - name: Set deployment status
+              id: set-result
+              run: echo "::set-output name=step-result::'success'"
