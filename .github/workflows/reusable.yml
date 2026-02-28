@@ -5,5 +5,9 @@ jobs:
     deploy:
         runs-on: ubuntu-latest
         steps:
+            - name: Get build artifacts
+              uses: actions/download-artifact@v7
+              with:
+                name: dist-files
             - name: Deploy to production
               run: echo "Deploying to production..."
